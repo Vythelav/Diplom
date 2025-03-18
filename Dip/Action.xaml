@@ -1,15 +1,79 @@
 ﻿<Window x:Class="Dip.Action"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Dip"
-        mc:Ignorable="d"
-        Title="Действия пользователей" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="UserActionsDataGrid" AutoGenerateColumns="True" 
-                  CanUserAddRows="False" 
-                  IsReadOnly="True" 
-                  Margin="10"/>
+        Title="Действия пользователей"
+        Height="500" Width="850"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Grid Background="#F0F2F5">
+        <!-- Карточка -->
+        <Border Background="White" CornerRadius="10" Padding="15" Margin="15"
+                BorderBrush="#DDDDDD" BorderThickness="1">
+
+            <StackPanel>
+                <!-- Заголовок -->
+                <TextBlock Text="Действия пользователей"
+                           FontSize="22" FontWeight="Bold"
+                           Foreground="#333333" HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <!-- Поле поиска -->
+                <Grid Margin="0,0,0,10">
+                    <TextBox x:Name="SearchBox"
+                             Height="35"
+                             Padding="5"
+                             BorderBrush="#007ACC"
+                             BorderThickness="1"
+                             Width="200"
+                             VerticalAlignment="Center"/>
+
+                    <!-- Placeholder для TextBox -->
+                    <TextBlock Text="Поиск..."
+                               Foreground="Gray"
+                               Margin="10,0,0,0"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBox}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+
+                <!-- Таблица -->
+                <DataGrid x:Name="UserActionsDataGrid"
+                          AutoGenerateColumns="True"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          Margin="0,5,0,0"
+                          BorderBrush="Transparent"
+                          RowHeight="40"
+                          HeadersVisibility="Column"
+                          AlternatingRowBackground="#F5F5F5"
+                          Background="White">
+
+                    <!-- Кастомный стиль заголовков -->
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#007ACC"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

@@ -1,15 +1,69 @@
 ﻿<Window x:Class="Dip.Admin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Dip"
-        mc:Ignorable="d"
-        Title="Admin" Height="450" Width="800">
-    <Grid>
-        <Label Content="Администратор" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="223" FontSize="24" HorizontalContentAlignment="Center"/>
-        <Button Foreground="White" Background="#007ACC" Content="Последние Действия" HorizontalAlignment="Left" Margin="337,187,0,0" VerticalAlignment="Top" Width="166" Height="46" FontSize="16" Click="Button_Click_1"/>
-        <Button Foreground="White" Background="#007ACC" Content="Обновление" HorizontalAlignment="Left" Margin="337,118,0,0" VerticalAlignment="Top" Width="166" Height="46" FontSize="16" Click="Button_Click"/>
+        Title="Администратор"
+        Height="450" Width="600"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
+    <Window.Resources>
+        <!-- Стили для закруглённых кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="10"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F0F2F5">
+        <!-- Карточка с содержимым -->
+        <Border Background="White" CornerRadius="10" Padding="20"
+                BorderBrush="#DDDDDD" BorderThickness="1"
+                Width="400" Height="300"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <!-- Заголовок -->
+                <TextBlock Text="Администратор"
+                           FontSize="22" FontWeight="Bold"
+                           Foreground="#333333"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,20"/>
+
+                <!-- Кнопка "Обновление" -->
+                <Button Content="Обновление"
+                        Click="Button_Click"
+                        Height="48" Width="250"
+                        Background="#007ACC" Foreground="White"
+                        FontSize="16" FontWeight="Bold"
+                        BorderBrush="Transparent"
+                        Cursor="Hand"
+                        Margin="0,5"/>
+
+                <!-- Кнопка "Последние Действия" -->
+                <Button Content="Последние Действия"
+                        Click="Button_Click_1"
+                        Height="48" Width="250"
+                        Background="#007ACC" Foreground="White"
+                        FontSize="16" FontWeight="Bold"
+                        BorderBrush="Transparent"
+                        Cursor="Hand"
+                        Margin="0,5"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
