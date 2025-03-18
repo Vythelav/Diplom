@@ -5,6 +5,7 @@
         Height="1080" Width="1920"
         Background="#F8F9FA"
         WindowStyle="None"
+        
         WindowState="Maximized"
         AllowsTransparency="True">
 
