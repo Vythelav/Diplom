@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Effects;
 using System.Data.SqlClient;
-
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Dip
 {
-
     public partial class MainWindow : Window
     {
         private string connectionString = "Server=LAPTOP-V0AGQKUF\\SLAUUUIK;Database=GetDiplom;Trusted_Connection=True;";
@@ -25,12 +15,37 @@ namespace Dip
         public MainWindow()
         {
             InitializeComponent();
+
+            MouseDown += Window_MouseDown;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = LoginTextBox.Text;
             string password = PasswordBox.Password;
+
+            var button = (Button)sender;
+            var scaleTransform = new ScaleTransform(1, 1);
+            button.RenderTransform = scaleTransform;
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                ShakeAnimation();
+                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             if (username.Equals("admin") && password.Equals("admin"))
             {
@@ -44,15 +59,32 @@ namespace Dip
                 secondPage.Show();
                 this.Close();
             }
-            
             else
             {
-                MessageBox.Show("Неверный логин или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShakeAnimation();
+                MessageBox.Show("Неверный логин или пароль.", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        private void ShakeAnimation()
+        {
+            var transform = new TranslateTransform();
+            this.RenderTransform = transform;
 
-    private bool ValidateUser(string username, string password)
+            var animation = new System.Windows.Media.Animation.DoubleAnimation
+            {
+                From = 0,
+                To = 10,
+                Duration = TimeSpan.FromMilliseconds(50),
+                AutoReverse = true,
+                RepeatBehavior = new System.Windows.Media.Animation.RepeatBehavior(3)
+            };
+
+            transform.BeginAnimation(TranslateTransform.XProperty, animation);
+        }
+
+        private bool ValidateUser(string username, string password)
         {
             try
             {
@@ -70,16 +102,12 @@ namespace Dip
                     }
                 }
             }
-           
             catch (Exception ex)
             {
-                
-                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Произошла ошибка при подключении к базе данных: {ex.Message}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
-
     }
 }
-
-

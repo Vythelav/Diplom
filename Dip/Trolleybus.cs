@@ -12,7 +12,7 @@ namespace Dip
         public string Number { get; set; }
         public int StatusId { get; set; }
         public DateTime Data { get; set; }
-        public string StatusName { get; set; } // Новое свойство для имени статуса
+        public string StatusName { get; set; } 
     }
 
 
